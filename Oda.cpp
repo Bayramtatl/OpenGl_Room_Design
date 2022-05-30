@@ -545,64 +545,16 @@ void lamp()
     drawCube1(1, 0, 0, 0.5, 0.0, 0.0);
     glPopMatrix();
 
-    //lamp shade
-    glColor3f(0.000, 0.000, 0.545);
+    //Abajur
+    glColor3f(0.0, 0.030, 0.545);
     glPushMatrix();
     glTranslatef(.6, 0.9, 8.9);
     glScalef(0.08, 0.09, 0.08);
-    drawTrapezoid(0.000, 0.000, 0.545, 0, 0, 0.2725);
+    drawTrapezoid(0.000, 0.000, 0.545, 0, 0, 0.2725); // Abajurun tepesi
     //drawCube1(0.000, 0.000, 0.545,  0,0,0.2725);
     glPopMatrix();
 }
 
-void LinkinParkPoster()
-{
-    //Linkin Park Poster *****************************************
-
-       //poster black
-    glColor3f(0.0, 0.0, 0.0);
-    glPushMatrix();
-    glTranslatef(-1, 1.4, 4.6);
-    glScalef(0.0001, .65, .8);
-    drawCube1(0, 0, 0, 0, 0, 0, 10);
-    glPopMatrix();
-
-    //Linkin Park logo
-    glColor3f(1.0, 1.0, 1.0);
-    glPushMatrix();
-    glTranslatef(-0.9, 2.1, 5.5);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.0001, .02, .25);
-    drawCube1(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10);
-    glPopMatrix();
-
-    //Linkin Park logo
-    glColor3f(1.0, 1.0, 1.0);
-    glPushMatrix();
-    glTranslatef(-0.9, 2.1, 6.2);
-    glRotatef(-14, 1, 0, 0);
-    glScalef(0.0001, .28, .02);
-    drawCube1(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10);
-    glPopMatrix();
-
-    //Linkin Park logo
-    glColor3f(1.0, 1.0, 1.0);
-    glPushMatrix();
-    glTranslatef(-0.9, 1.8, 6);
-    glRotatef(-14, 1, 0, 0);
-    glScalef(0.0001, .29, .02);
-    drawCube1(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10);
-    glPopMatrix();
-
-    //Linkin Park logo
-    glColor3f(1.0, 1.0, 1.0);
-    glPushMatrix();
-    glTranslatef(-0.9, 2.1, 5.5);
-    glRotatef(23, 1, 0, 0);
-    glScalef(0.0001, .25, .02);
-    drawCube1(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10);
-    glPopMatrix();
-}
 
 void wardrobe()
 {
@@ -694,32 +646,6 @@ void dressingTable()
     drawCube1(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
     glPopMatrix();
 
-    /*   //dressing table left body left stripe
-       glColor3f(0.2,0.1,0.1);
-       glPushMatrix();
-       glTranslatef(5.9,0,5.2);
-       //glRotatef(22, 0,0,1);
-       glScalef(0.01, 0.3, 0.0001);
-       drawCube();
-       glPopMatrix();
-
-       //dressing table left body right stripe
-       glColor3f(0.2,0.1,0.1);
-       glPushMatrix();
-       glTranslatef(6.5,0,5.2);
-       //glRotatef(22, 0,0,1);
-       glScalef(0.01, 0.2, 0.0001);
-       drawCube();
-       glPopMatrix();
-
-       //dressing table left body bottom stripe
-       glColor3f(0.2,0.1,0.1);
-       glPushMatrix();
-       glTranslatef(5.9,0,5.2);
-       //glRotatef(22, 0,0,1);
-       glScalef(0.2, 0.01, 0.0001);
-       drawCube();
-       glPopMatrix();  */
 
        //dressing table right body
     glPushMatrix();
@@ -728,32 +654,6 @@ void dressingTable()
     drawCube1(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
     glPopMatrix();
 
-    /*     //dressing table right body left stripe
-         glColor3f(0.2,0.1,0.1);
-         glPushMatrix();
-         glTranslatef(7,0,5.2);
-         //glRotatef(22, 0,0,1);
-         glScalef(0.01, 0.2, 0.0001);
-         drawCube();
-         glPopMatrix();
-
-         //dressing table right body right stripe
-         glColor3f(0.2,0.1,0.1);
-         glPushMatrix();
-         glTranslatef(7.6,0,5.2);
-         //glRotatef(22, 0,0,1);
-         glScalef(0.01, 0.3, 0.0001);
-         drawCube();
-         glPopMatrix();
-
-         //dressing table right body bottom stripe
-         glColor3f(0.2,0.1,0.1);
-         glPushMatrix();
-         glTranslatef(7,0,5.2);
-         //glRotatef(22, 0,0,1);
-         glScalef(0.2, 0.01, 0.0001);
-         drawCube();
-         glPopMatrix(); */
 
          //dressing table upper body
     glPushMatrix();
@@ -1077,32 +977,6 @@ void Clock()
     drawCube1(0, 0, 0, 0, 0, 0);
     glPopMatrix();
 
-    /*   //clock body bottom strip
-       glColor3f(0.2,0.1,0.1); //0.2,0.1,0.1
-       glPushMatrix();
-       glTranslatef(-0.66,1.8,7.89);
-       //glRotatef(22, 0,0,1);
-       glScalef(0.001, 0.01, 0.1);
-       drawCube();
-       glPopMatrix();
-
-       //clock body right strip
-       glColor3f(0.0,0.0,0.0); //0.2,0.1,0.1
-       glPushMatrix();
-       glTranslatef(-0.66,1.8,7.89);
-       //glRotatef(22, 0,0,1);
-       glScalef(0.005, 0.25, 0.01);
-       drawCube();
-       glPopMatrix();
-
-       //clock body left strip
-       glColor3f(0.2,0.1,0.1); //0.2,0.1,0.1
-       glPushMatrix();
-       glTranslatef(-0.65,1.8,8.2);
-       //glRotatef(22, 0,0,1);
-       glScalef(0.0001, 0.25, 0.01);
-       drawCube();
-       glPopMatrix();  */
 
        //clock pendulum stick
     glColor3f(0.2, 0.1, 0.1); //0.2,0.1,0.1
@@ -1401,7 +1275,6 @@ void display(void)
     bed();
     bedsideDrawer();
     lamp();
-    LinkinParkPoster();
     wallshelf();
     wardrobe();
     cupboard();
