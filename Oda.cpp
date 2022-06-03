@@ -146,7 +146,7 @@ void yamukCiz(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat am
 }
 
 
-//Drawing pyramid *************************
+//Piramit çizme *************************
 static GLfloat v_pyramid[5][3] =
 {
     {0.0, 0.0, 0.0},
@@ -1268,8 +1268,8 @@ int main(int argc, char** argv)
     std::cout << "n: asagi" << std::endl;
     std::cout << "b: sol" << std::endl;
     std::cout << "m: sag" << std::endl;
-    std::cout << "l: yakinlas" << std::endl;
-    std::cout << "k: uzaklas" << std::endl;
+    std::cout << "l: saga bak" << std::endl;
+    std::cout << "k: sola bak" << std::endl;
     std::cout << "      " << std::endl;
     std::cout << "Q ile ayarlari resetle" << std::endl;
     std::cout << "      " << std::endl;
@@ -1300,7 +1300,7 @@ int main(int argc, char** argv)
 
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(windowHeight, windowWidth);
-    glutCreateWindow("1607063 Bedroom");
+    glutCreateWindow("Oda");
 
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
