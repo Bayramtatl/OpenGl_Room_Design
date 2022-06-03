@@ -10,10 +10,10 @@
 
 GLboolean redFlag = true, switchOne = false, switchTwo = false, switchLamp = false, amb1 = true, diff1 = true, spec1 = true, amb2 = true, diff2 = true, spec2 = true, amb3 = true, diff3 = true, spec3 = true;
 double windowHeight = 800, windowWidth = 600;
-double eyeX = 7.0, eyeY = 2.0, eyeZ = 15.0, refX = 0, refY = 0, refZ = 0;
+double eyeX = 7.0, eyeY = 2.0, eyeZ = 15.0, refX = 0, refY = 0, refZ = 0; // bakýþ açýsý için kullanýlacak deðiþkenler.
 double theta = 180.0, y = 1.36, z = 7.97888;
 
-static GLfloat v_cube[8][3] =
+static GLfloat v_kup[8][3] =
 {
     {0.0, 0.0, 0.0}, //0
     {0.0, 0.0, 3.0}, //1
@@ -37,7 +37,7 @@ static GLubyte quadIndices[6][4] =
 
 
 
-static void getNormal3p
+static void getNormal3p // Cisme ýþýðýn hangi açýyla çarptýðýný vs hesaplar
 (GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3)
 {
     GLfloat Ux, Uy, Uz, Vx, Vy, Vz, Nx, Ny, Nz;
@@ -58,23 +58,7 @@ static void getNormal3p
 }
 
 
-void drawCube()
-{
-    glBegin(GL_QUADS);
-    for (GLint i = 0; i < 6; i++)
-    {
-        getNormal3p(v_cube[quadIndices[i][0]][0], v_cube[quadIndices[i][0]][1], v_cube[quadIndices[i][0]][2],
-            v_cube[quadIndices[i][1]][0], v_cube[quadIndices[i][1]][1], v_cube[quadIndices[i][1]][2],
-            v_cube[quadIndices[i][2]][0], v_cube[quadIndices[i][2]][1], v_cube[quadIndices[i][2]][2]);
-        glVertex3fv(&v_cube[quadIndices[i][0]][0]);
-        glVertex3fv(&v_cube[quadIndices[i][1]][0]);
-        glVertex3fv(&v_cube[quadIndices[i][2]][0]);
-        glVertex3fv(&v_cube[quadIndices[i][3]][0]);
-    }
-    glEnd();
-}
-
-void drawCube1(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX = 0, GLfloat ambY = 0, GLfloat ambZ = 0, GLfloat shine = 50)
+void kupCiz(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX = 0, GLfloat ambY = 0, GLfloat ambZ = 0, GLfloat shine = 50)
 {
     GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { ambX, ambY, ambZ, 1.0 };
@@ -92,18 +76,18 @@ void drawCube1(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX = 0, GLflo
 
     for (GLint i = 0; i < 6; i++)
     {
-        getNormal3p(v_cube[quadIndices[i][0]][0], v_cube[quadIndices[i][0]][1], v_cube[quadIndices[i][0]][2],
-            v_cube[quadIndices[i][1]][0], v_cube[quadIndices[i][1]][1], v_cube[quadIndices[i][1]][2],
-            v_cube[quadIndices[i][2]][0], v_cube[quadIndices[i][2]][1], v_cube[quadIndices[i][2]][2]);
-        glVertex3fv(&v_cube[quadIndices[i][0]][0]);
-        glVertex3fv(&v_cube[quadIndices[i][1]][0]);
-        glVertex3fv(&v_cube[quadIndices[i][2]][0]);
-        glVertex3fv(&v_cube[quadIndices[i][3]][0]);
+        getNormal3p(v_kup[quadIndices[i][0]][0], v_kup[quadIndices[i][0]][1], v_kup[quadIndices[i][0]][2],
+            v_kup[quadIndices[i][1]][0], v_kup[quadIndices[i][1]][1], v_kup[quadIndices[i][1]][2],
+            v_kup[quadIndices[i][2]][0], v_kup[quadIndices[i][2]][1], v_kup[quadIndices[i][2]][2]);
+        glVertex3fv(&v_kup[quadIndices[i][0]][0]);
+        glVertex3fv(&v_kup[quadIndices[i][1]][0]);
+        glVertex3fv(&v_kup[quadIndices[i][2]][0]);
+        glVertex3fv(&v_kup[quadIndices[i][3]][0]);
     }
     glEnd();
 }
 
-static GLfloat v_trapezoid[8][3] =
+static GLfloat v_yamuk[8][3] =
 {
     {0.0, 0.0, 0.0}, //0
     {0.0, 0.0, 3.0}, //1
@@ -117,15 +101,15 @@ static GLfloat v_trapezoid[8][3] =
 
 static GLubyte TquadIndices[6][4] =
 {
-    {0, 1, 2, 3}, //bottom
-    {4, 5, 6, 7}, //top
-    {5, 1, 2, 6}, //front
-    {0, 4, 7, 3}, // back is clockwise
-    {2, 3, 7, 6}, //right
-    {1, 5, 4, 0}  //left is clockwise
+    {0, 1, 2, 3}, //alt 
+    {4, 5, 6, 7}, //üst
+    {5, 1, 2, 6}, //ön
+    {0, 4, 7, 3}, // arka 
+    {2, 3, 7, 6}, //sað
+    {1, 5, 4, 0}  //sol
 };
 
-void drawTrapezoid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 50)
+void yamukCiz(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 50)
 {
     GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { ambX, ambY, ambZ, 1.0 };
@@ -149,14 +133,14 @@ void drawTrapezoid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLflo
     glBegin(GL_QUADS);
     for (GLint i = 0; i < 6; i++)
     {
-        getNormal3p(v_trapezoid[TquadIndices[i][0]][0], v_trapezoid[TquadIndices[i][0]][1], v_trapezoid[TquadIndices[i][0]][2],
-            v_trapezoid[TquadIndices[i][1]][0], v_trapezoid[TquadIndices[i][1]][1], v_trapezoid[TquadIndices[i][1]][2],
-            v_trapezoid[TquadIndices[i][2]][0], v_trapezoid[TquadIndices[i][2]][1], v_trapezoid[TquadIndices[i][2]][2]);
+        getNormal3p(v_yamuk[TquadIndices[i][0]][0], v_yamuk[TquadIndices[i][0]][1], v_yamuk[TquadIndices[i][0]][2],
+            v_yamuk[TquadIndices[i][1]][0], v_yamuk[TquadIndices[i][1]][1], v_yamuk[TquadIndices[i][1]][2],
+            v_yamuk[TquadIndices[i][2]][0], v_yamuk[TquadIndices[i][2]][1], v_yamuk[TquadIndices[i][2]][2]);
 
-        glVertex3fv(&v_trapezoid[TquadIndices[i][0]][0]);
-        glVertex3fv(&v_trapezoid[TquadIndices[i][1]][0]);
-        glVertex3fv(&v_trapezoid[TquadIndices[i][2]][0]);
-        glVertex3fv(&v_trapezoid[TquadIndices[i][3]][0]);
+        glVertex3fv(&v_yamuk[TquadIndices[i][0]][0]);
+        glVertex3fv(&v_yamuk[TquadIndices[i][1]][0]);
+        glVertex3fv(&v_yamuk[TquadIndices[i][2]][0]);
+        glVertex3fv(&v_yamuk[TquadIndices[i][3]][0]);
     }
     glEnd();
 }
@@ -185,7 +169,7 @@ static GLubyte PquadIndices[1][4] =
     {0, 3, 2, 1}
 };
 
-void drawpyramid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
+void piramitCiz(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
 {
     GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { ambX, ambY, ambZ, 1.0 };
@@ -225,7 +209,7 @@ void drawpyramid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat
 
 }
 
-void polygon(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
+void poligon(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
 {
     GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { ambX, ambY, ambZ, 1.0 };
@@ -255,7 +239,7 @@ void polygon(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat amb
     glEnd();
 }
 
-void polygonLine(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
+void poligonCizgi(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
 {
     GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { ambX, ambY, ambZ, 1.0 };
@@ -284,7 +268,7 @@ void polygonLine(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat
     glEnd();
 }
 
-void drawSphere(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 90)
+void kureCiz(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 90)
 {
     GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { ambX, ambY, ambZ, 1.0 };
@@ -300,803 +284,592 @@ void drawSphere(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat 
     glutSolidSphere(3.0, 20, 16);
 }
 
-void cupboard()
+void dolap()
 {
-    //Cupboard/Almari ************************************************************
 
-        //cupboard
+        //dolap
     glPushMatrix();
     glTranslatef(4, 0, 4.4);
     glScalef(0.5, 1, 0.5);
-    drawCube1(0.5, 0.2, 0.2, 0.25, 0.1, 0.1);
+    kupCiz(0.741, 0.718, 0.420, 0.341, 0.318, 0.210);
     glPopMatrix();
 
-    //cupboard's 1st vertical stripline
+    //dolap üst yatay çizgi
     glPushMatrix();
     glTranslatef(4, 1, 5.9);
     glScalef(0.5, 0.01, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //cupboard's 2nd vertical stripline
+    //dolap üst 2. yatay çizgi
     glPushMatrix();
     glTranslatef(4, 0.5, 5.9);
     glScalef(0.5, 0.01, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //cupboard's last stripline
+    //dolap 3. yatay çizgi
     glPushMatrix();
     glTranslatef(4, 0, 5.9);
     glScalef(0.5, 0.01, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //cupboard's lst horizontal stripline
+    //dolap dikey çizgi
     glPushMatrix();
     glTranslatef(5.5, 0, 5.9);
     glScalef(0.01, 1, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //cupboard's right side horizontal stripline
+    //dolap sað dikey çizgi
     glPushMatrix();
     glTranslatef(4.75, 1, 5.9);
     glScalef(0.01, 0.67, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //cupboard's left side horizontal stripline
+    //dolap sol dikey çizgi
     glPushMatrix();
     glTranslatef(4, 0, 5.9);
     glScalef(0.01, 1, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //cupboard's handle right
+    //dolap sað tutacak
     glPushMatrix();
     glTranslatef(5, 1.4, 5.9);
     glScalef(0.02, 0.18, 0.01);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //cupboard's handle right sphere
+    //dolap sað tutacak dairesi
     glPushMatrix();
     glTranslatef(5.02, 1.9, 5.91);
     glScalef(0.02, 0.02, 0.01);
-    drawSphere(0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 10);
+    kureCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 10);
     glPopMatrix();
 
-    //cupboard's handle left
+    //dolap sol tutacak
     glPushMatrix();
     glTranslatef(4.5, 1.4, 5.9);
     glScalef(0.02, 0.18, 0.01);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //cupboard's handle left sphere
+    //dolap sol tutacak dairesi
     glPushMatrix();
     glTranslatef(4.52, 1.9, 5.91);
     glScalef(0.02, 0.02, 0.01);
-    drawSphere(0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 10);
+    kureCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 10);
     glPopMatrix();
 
-    //cupboard's drawer's 1st handle
+    //dolap üst çekmece tutacaðý
     glPushMatrix();
     glTranslatef(4.5, 0.7, 5.9);
     glScalef(0.16, 0.02, 0.01);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //cupboard's drawer's 2nd handle
+    //cdolap alt çekmece tutacaðý
     glPushMatrix();
     glTranslatef(4.5, 0.25, 5.9);
     glScalef(0.16, 0.02, 0.01);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 }
 
-void room()
+void oda()
 {
-    // carpet
-    //glColor3f(0.4, 0.1, 0.0);
+    // halý
+    //glColor3f(0.2, 0.8, 0.8);
     glPushMatrix();
     //glScalef(5, 0.1, 7);
     glTranslatef(3, -0.2, 7);
     glScalef(1.3, 0.01, 1.7);
-    drawCube1(0.4, 0.1, 0.0, 0.20, 0.05, 0.0);
+    kupCiz(0.24, 0.2, 0.45, 0.482, 0.408, 0.933);
+    //kupCiz(0.482, 0.408, 0.933, 0.24, 0.2, 0.45);
     glPopMatrix();
 
-    // right wall
+    // arka duvar
     //glColor3f(1, 0.8, 0.5);
     glPushMatrix();
     glTranslatef(-1.5, -1, .5);
     glScalef(5, 2, 0.1);
-    //drawCube1(1, 0.8, 0.5,  0.5,0.4,0.25);
-    drawCube1(1, 0.8, 0.7, 0.5, 0.4, 0.35);
+    kupCiz(1, 0.8, 0.7, 0.5, 0.4, 0.35);
     glPopMatrix();
 
-    // left wall
+    // sol duvar
     //glColor3f(1, 0.8, 0.7);
     glPushMatrix();
     glTranslatef(-4.5, -1, 0);
     glScalef(1, 2, 5);
-    drawCube1(1, 0.8, 0.7, 0.5, 0.4, 0.35);
+    kupCiz(1, 0.8, 0.7, 0.5, 0.4, 0.35);
     glPopMatrix();
 
-    // wall besides the right wall
+    // sað duvar
     //glColor3f(1, 0.8, 0.7);
     glPushMatrix();
     glTranslatef(8, -1, 0);
     glScalef(0.2, 2, 5);
-    drawCube1(1, 0.8, 0.7, 0.5, 0.4, 0.35);
+    kupCiz(1, 0.8, 0.7, 0.863, 0.863, 0.863);
     glPopMatrix();
 
-    //ceiling
+    //tavan
      //glColor3f(1.0, 0.9, 0.8);
     glPushMatrix();
     glTranslatef(-2, 5.1, 0);
     glScalef(5, 0.1, 7);
-    drawCube1(1.0, 0.9, 0.8, 0.5, 0.45, 0.4);
+    kupCiz(1.0, 0.9, 0.8, 0.412, 0.412, 0.412);
     glPopMatrix();
 
-    // floor
+    // zemin
     glPushMatrix();
     glScalef(5, 0.1, 7);
     glTranslatef(-1, -5, 0); //-1,-5,.5
     //glScalef(5, 0.1, 7);
-    drawCube1(0.5, 0.1, 0.0, 0.25, 0.05, 0);
+    kupCiz(0.1, 0.2, 0.4, 0.502, 0.502, 0.502);
     glPopMatrix();
 }
 
-void bed()
+void yatak()
 {
-    //bed headboard
+    //yatak kafalýk
     glPushMatrix();
     glScalef(0.1, 0.5, 0.9);
     glTranslatef(-2, -0.5, 6.2);
-    drawCube1(0.5, 0.2, 0.2, 0.25, 0.1, 0.1);
+    kupCiz(0.5, 0.2, 0.2, 0.25, 0.1, 0.1);
     glPopMatrix();
 
-    //bed body
+    //yatak gövde
     glPushMatrix();
     glScalef(1, 0.2, 0.9); //1, 0.2, 0.9
     glTranslatef(0, -0.5, 6.2);
-    drawCube1(0.824, 0.706, 0.549, 0.412, 0.353, 0.2745);
+    kupCiz(0.824, 0.706, 0.549, 0.412, 0.353, 0.2745);
     glPopMatrix();
 
-    //pillow right far
+    //saðdaki yastýk
     //glColor3f(0.627, 0.322, 0.176);
     glPushMatrix();
     glTranslatef(0.5, 0.5, 6);
-    glRotatef(20, 0, 0, 1);
+    glRotatef(40, 0, 0, 1);
     glScalef(0.1, 0.15, 0.28);
-    drawCube1(0.627, 0.322, 0.176, 0.3135, 0.161, 0.088);
+    kupCiz(0.627, 0.322, 0.176, 0.3135, 0.161, 0.088);
     glPopMatrix();
 
-    //pillow left near
+    //soldaki yastýk
     //glColor3f(0.627, 0.322, 0.176);
     glPushMatrix();
     glTranslatef(0.5, 0.5, 7.2);
-    glRotatef(22, 0, 0, 1);
+    glRotatef(42, 0, 0, 1);
     glScalef(0.1, 0.15, 0.28);
-    drawCube1(0.627, 0.322, 0.176, 0.3135, 0.161, 0.088);
+    kupCiz(0.627, 0.322, 0.176, 0.3135, 0.161, 0.088);
     glPopMatrix();
 
-    //blanket
+    //yorgan
     //glColor3f(0.627, 0.322, 0.176);
     glPushMatrix();
     glTranslatef(1.4, 0.45, 5.5);
     //glRotatef(22, 0,0,1);
     glScalef(0.5, 0.05, 0.95);
-    drawCube1(0.627, 0.322, 0.176, 0.3135, 0.161, 0.088);
+    kupCiz(0.122, 0.206, 0.446, 0.255, 0.412, 0.882);
     glPopMatrix();
 
-    //blanket side left part
+    //yorgan sol alt tarafý
     //glColor3f(0.627, 0.322, 0.176);
     glPushMatrix();
     glTranslatef(1.4, -0.3, 8.16);
     //glRotatef(22, 0,0,1);
     glScalef(0.5, 0.25, 0.05);
-    drawCube1(0.627, 0.322, 0.176, 0.3135, 0.161, 0.088);
+    kupCiz(0.122, 0.206, 0.446, 0.255, 0.412, 0.882);
     glPopMatrix();
 }
 
-void bedsideDrawer()
+void komodin()
 {
-    //bedside drawer *************************************
 
-      //side drawer
+      //komodin
     glPushMatrix();
     glTranslatef(0.5, -0.1, 8.7); //0.5,-0.1,9
     glScalef(0.12, 0.2, 0.23);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //side drawer's drawer
+    //komodinin çekmece kýsmý
     glPushMatrix();
     glTranslatef(0.88, 0, 8.8);
     glScalef(0.0001, 0.11, 0.18);
-    drawCube1(0.3, 0.2, 0.2, 0.15, 0.1, 0.1);
+    kupCiz(0.3, 0.2, 0.2, 0.15, 0.1, 0.1);
     glPopMatrix();
 
-    //side drawer's knob
+    //çekmecenin tutacaðý
     glPushMatrix();
     glTranslatef(0.9, 0.15, 9.05);
     glScalef(0.01, 0.02, 0.02);
-    drawSphere(0.3, 0.1, 0.0, 0.15, 0.05, 0.0);
+    kureCiz(0.3, 0.1, 0.0, 0.15, 0.05, 0.0);
     glPopMatrix();
 }
 
-void lamp()
+void lamba()
 {
-    //lamp base
+    //lamba temel
     glPushMatrix();
     glTranslatef(.6, 0.5, 8.95);
     glScalef(0.07, 0.02, 0.07);
-    drawCube1(0, 0, 1, 0, 0, 0.5);
+    kupCiz(0, 0, 1, 0, 0, 0.5);
     glPopMatrix();
 
-    //lamp stand
+    //lamba duruþ
     glColor3f(1, 0, 0);
     glPushMatrix();
     glTranslatef(.7, 0.35, 9.05);
     glScalef(0.01, 0.2, 0.01);
-    drawCube1(1, 0, 0, 0.5, 0.0, 0.0);
+    kupCiz(1, 0, 0, 0.5, 0.0, 0.0);
     glPopMatrix();
 
-    //Abajur
+    // Abajur
     glColor3f(0.0, 0.030, 0.545);
     glPushMatrix();
     glTranslatef(.6, 0.9, 8.9);
     glScalef(0.08, 0.09, 0.08);
-    drawTrapezoid(0.000, 0.000, 0.545, 0, 0, 0.2725); // Abajurun tepesi
-    //drawCube1(0.000, 0.000, 0.545,  0,0,0.2725);
+    yamukCiz(0.000, 0.000, 0.545, 0, 0, 0.2725); // Abajurun tepesi
     glPopMatrix();
 }
 
 
-void wardrobe()
+
+
+void sifonyer()
 {
-    //wardrobe
-    glPushMatrix();
-    glTranslatef(0, 0, 4);
-    glScalef(0.12, 0.6, 0.4);
-    drawCube1(0.3, 0.1, 0, 0.15, 0.05, 0);
-    glPopMatrix();
 
-    //wardrobe's 1st drawer
-    glPushMatrix();
-    glTranslatef(0.36, 1.4, 4.05);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.0001, 0.11, 0.38);
-    drawCube1(0.5, 0.2, 0.2, 0.25, 0.1, 0.1);
-    glPopMatrix();
-
-    //wardrobe's 2nd drawer
-    glPushMatrix();
-    glTranslatef(0.36, 1, 4.05);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.0001, 0.11, 0.38);
-    drawCube1(0.5, 0.2, 0.2, 0.25, 0.1, 0.1);
-    glPopMatrix();
-
-    //wardrobe's 3rd drawer
-    glPushMatrix();
-    glTranslatef(0.36, 0.6, 4.05);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.0001, 0.11, 0.38);
-    drawCube1(0.5, 0.2, 0.2, 0.25, 0.1, 0.1);
-    glPopMatrix();
-
-    //wardrobe's 4th drawer
-    glPushMatrix();
-    glTranslatef(0.36, 0.2, 4.05);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.0001, 0.11, 0.38);
-    drawCube1(0.5, 0.2, 0.2, 0.25, 0.1, 0.1);
-    glPopMatrix();
-
-    //wardrobe's 1st drawer handle
-    glColor3f(0.3, 0.1, 0);
-    glPushMatrix();
-    glTranslatef(0.37, 1.5, 4.3);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.01, 0.03, 0.2);
-    drawCube1(0.3, 0.1, 0, 0.15, 0.05, 0.0);
-    glPopMatrix();
-
-    //wardrobe's 2nd drawer handle
-    glColor3f(0.3, 0.1, 0);
-    glPushMatrix();
-    glTranslatef(0.37, 1.1, 4.3);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.01, 0.03, 0.2);
-    drawCube1(0.3, 0.1, 0, 0.15, 0.05, 0.0);
-    glPopMatrix();
-
-    //wardrobe's 3rd drawer handle
-    glColor3f(0.3, 0.1, 0);
-    glPushMatrix();
-    glTranslatef(0.37, 0.7, 4.3);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.01, 0.03, 0.2);
-    drawCube1(0.3, 0.1, 0, 0.15, 0.05, 0.0);
-    glPopMatrix();
-
-    //wardrobe's 4th drawer handle
-    glColor3f(0.3, 0.1, 0);
-    glPushMatrix();
-    glTranslatef(0.37, 0.3, 4.3);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.01, 0.03, 0.2);
-    drawCube1(0.3, 0.1, 0, 0.15, 0.05, 0.0);
-    glPopMatrix();
-
-}
-
-void dressingTable()
-{
-    //Dressing table ************************************************
-
-        //dressing table left body
+    
+        //sifonyer sol gövde
     glPushMatrix();
     glTranslatef(5.9, 0, 4.6);
     glScalef(0.2, 0.2, 0.2);
-    drawCube1(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
+    kupCiz(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
     glPopMatrix();
 
 
-       //dressing table right body
+       //sifonyer sað gövde
     glPushMatrix();
     glTranslatef(7, 0, 4.6);
     glScalef(0.2, 0.2, 0.2);
-    drawCube1(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
+    kupCiz(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
     glPopMatrix();
 
 
-         //dressing table upper body
+         //sifonyer üst gövde
     glPushMatrix();
     glTranslatef(5.9, 0.6, 4.6);
     glScalef(0.57, 0.1, 0.2);
-    drawCube1(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
+    kupCiz(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
     glPopMatrix();
 
-    //dressing table upper body bottom stripe
+    //sifonyer üst gövdedeki alt þerit
     glPushMatrix();
     glTranslatef(5.9, 0.6, 5.2);
     //glRotatef(22, 0,0,1);
     glScalef(0.57, 0.01, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table upper body upper stripe
+    //sifonyer üst gövdedeki üst þerit
     glPushMatrix();
     glTranslatef(5.9, 0.9, 5.2);
     //glRotatef(22, 0,0,1);
     glScalef(0.57, 0.01, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table upper body handle
+    //þifonyer üst gövde kolu
     glColor3f(0.2, 0.1, 0.1);
     glPushMatrix();
     glTranslatef(6.5, 0.75, 5.2);
     //glRotatef(22, 0,0,1);
     glScalef(0.16, 0.02, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table left body handle
+    //þifonyer sol gövde kolu
     glColor3f(0.2, 0.1, 0.1);
     glPushMatrix();
     glTranslatef(6.4, 0.1, 5.2);
     //glRotatef(22, 0,0,1);
     glScalef(0.02, 0.13, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table right body handle
+    //þifonyer sað gövde kolu
     glColor3f(0.2, 0.1, 0.1);
     glPushMatrix();
     glTranslatef(7.1, 0.1, 5.2);
     //glRotatef(22, 0,0,1);
     glScalef(0.02, 0.13, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table main mirror
+    //þifonyer ana ayna
     glPushMatrix();
     glTranslatef(6.2, 0.9, 4.7);
     //glRotatef(22, 0,0,1);
     glScalef(0.36, 0.5, 0.0001);
-    drawCube1(0.690, 0.878, 0.902, 0.345, 0.439, 0.451, 10);
+    kupCiz(0.690, 0.878, 0.902, 0.345, 0.439, 0.451, 10);
     glPopMatrix();
 
-    //dressing table left mirror
+    //þifonyer sol ayna
     glPushMatrix();
     glTranslatef(5.92, 0.9, 4.7);
     //glRotatef(0, 0,1,0);
     glScalef(0.1, 0.48, 0.0001);
-    drawCube1(0.690, 0.878, 0.902, 0.345, 0.439, 0.451, 10);
+    kupCiz(0.690, 0.878, 0.902, 0.345, 0.439, 0.451, 10);
     glPopMatrix();
 
-    //dressing table left mirror left stripe
+    //þifonyer sol ayna sol þerit
     glColor3f(0.2, 0.1, 0.1);
     glPushMatrix();
     glTranslatef(5.92, 0.9, 4.71);
     //glRotatef(22, 0,0,1);
     glScalef(0.019, 0.48, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table left mirror left stripe
+    //þifonyer sol ayna sað þerit
     glColor3f(0.2, 0.1, 0.1);
     glPushMatrix();
     glTranslatef(6.17, 0.9, 4.71);
     //glRotatef(22, 0,0,1);
     glScalef(0.019, 0.48, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table mirror  stripe
+    //dressing table aynadaki þerit
     glColor3f(0.2, 0.1, 0.1);
     glPushMatrix();
     glTranslatef(5.92, 0.9, 4.71);
     //glRotatef(22, 0,0,1);
     glScalef(0.55, 0.019, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table left mirror upper stripe
+    //dressing table sað ayna üst þerit
     glColor3f(0.2, 0.1, 0.1);
     glPushMatrix();
     glTranslatef(5.92, 2.3, 4.71);
     //glRotatef(22, 0,0,1);
     glScalef(0.1, 0.019, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table right mirror
+    //dressing table sað ayna
     glPushMatrix();
     glTranslatef(7.25, 0.9, 4.7);
     //glRotatef(-40, 0,1,0);
     glScalef(0.1, 0.48, 0.0001);
-    drawCube1(0.690, 0.878, 0.902, 0.345, 0.439, 0.451, 10);
+    kupCiz(0.690, 0.878, 0.902, 0.345, 0.439, 0.451, 10);
     glPopMatrix();
 
-    //dressing table left mirror upper stripe
+    //dressing table sol ayna üst þerit
     glColor3f(0.2, 0.1, 0.1);
     glPushMatrix();
     glTranslatef(7.25, 2.3, 4.71);
     //glRotatef(22, 0,0,1);
     glScalef(0.1, 0.019, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table right mirror left stripe
+    //sifonyer sað ayna sol þerit
     glColor3f(0.2, 0.1, 0.1);
     glPushMatrix();
     glTranslatef(7.25, 0.9, 4.71);
     //glRotatef(22, 0,0,1);
     glScalef(0.019, 0.48, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table right mirror right stripe
+    //sifonyer sað ayna sað þerit
     glColor3f(0.2, 0.1, 0.1);
     glPushMatrix();
     glTranslatef(7.5, 0.9, 4.71);
     //glRotatef(22, 0,0,1);
     glScalef(0.019, 0.48, 0.0001);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //dressing table main mirror polygon part
+    //sifonyer ana ayna poligon parçasý
     glColor3f(0.690, 0.878, 0.902);
     glPushMatrix();
     glTranslatef(6.2, 2.4, 4.7);
     //glRotatef(22, 0,0,1);
     glScalef(0.18, 0.18, 2);
-    polygon(0.690, 0.878, 0.902, 0.345, 0.439, 0.451, 10);
+    poligon(0.690, 0.878, 0.902, 0.345, 0.439, 0.451, 10);
     glPopMatrix();
 
-    //dressing table upper round srtipe
+    //sifonyer üst yuvarlak þerit
     glColor3f(0.2, 0.1, 0.1);
     glPushMatrix();
     glTranslatef(6.2, 2.4, 4.71);
     glScalef(.18, .18, 1);
-    polygonLine(0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 50);
+    poligonCizgi(0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 50);
+    glPopMatrix();
+    
+}
+
+void tv()
+{
+
+
+    //tv çerçeve
+    glPushMatrix();
+    glTranslatef(0.3, 1, 1);
+    glScalef(0.71, 0.5, 0.08);
+    kupCiz(0.001, 0.0001, 0.00001, 0.000, 0.000, 0.000);
+    glPopMatrix();
+
+    //tv ekran
+    glPushMatrix();
+    glTranslatef(0.42, 1.15, 1);
+    glScalef(0.65, 0.4, 0.10);
+    kupCiz(0.001, 0.0001, 0.00001, 0.412, 0.412, 0.412);
     glPopMatrix();
 
 }
 
-void wallshelf()
+void Saat()
 {
-    //Wall Shelf **********************************************
+    //Saat ************************************************************
 
-      //wall shelf one
-    glPushMatrix();
-    glTranslatef(1.5, 2.7, 3);
-    glScalef(0.4, 0.03, 0.2);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    //wall shelf two
-    glPushMatrix();
-    glTranslatef(1, 2.3, 3);
-    glScalef(0.4, 0.03, 0.2);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    //wall shelf three
-    glPushMatrix();
-    glTranslatef(0.5, 1.9, 3);
-    glScalef(0.4, 0.03, 0.2);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    //wall shelf four
-    glPushMatrix();
-    glTranslatef(1, 1.5, 3);
-    glScalef(0.4, 0.03, 0.2);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    //wall shelf five
-    glPushMatrix();
-    glTranslatef(1.5, 1.1, 3);
-    glScalef(0.4, 0.03, 0.2);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    //showpiece on the bottom shelf from left 1
-    glPushMatrix();
-    glTranslatef(1.5, 1.2, 3);
-    glScalef(0.04, 0.06, 0.2);
-    drawCube1(0.698, 0.133, 0.133, 0.349, 0.0665, 0.0665);
-    glPopMatrix();
-
-    //showpiece on the bottom shelf from left 2
-    glPushMatrix();
-    glTranslatef(2, 1.2, 3);
-    glScalef(0.04, 0.06, 0.2);
-    drawCube1(0.729, 0.333, 0.827, 0.3645, 0.1665, 0.4135);
-    glPopMatrix();
-
-    //showpiece on the bottom shelf from left 3 lower portion
-    glPushMatrix();
-    glTranslatef(2.5, 1.2, 3);
-    glScalef(0.04, 0.06, 0.2);
-    drawCube1(0.098, 0.098, 0.439, 0.049, 0.049, 0.2195);
-    glPopMatrix();
-
-    //showpiece on the bottom shelf from left 3 upper portion
-    glPushMatrix();
-    glTranslatef(2.51, 1.35, 3);
-    glScalef(0.01, 0.05, 0.2);
-    drawCube1(0.529, 0.808, 0.980, 0.2645, 0.404, 0.490);
-    glPopMatrix();
-
-    //showpiece on the top shelf  left 2
-    glColor3f(0.502, 0.502, 0.000);
-    glPushMatrix();
-    glTranslatef(2.5, 2.71, 3);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.05, 0.16, 0.01);
-    drawCube1(0.502, 0.502, 0.000, 0.251, 0.251, 0);
-    glPopMatrix();
-
-    //showpiece on the top shelf left 1
-    glPushMatrix();
-    glTranslatef(1.8, 2.71, 3);
-    glScalef(0.16, 0.1, 0.01);
-    drawCube1(0, 0, 0.9, 0, 0, 0.45);
-    glPopMatrix();
-
-    //showpiece on 2nd shelf
-    glColor3f(.416, 0.353, 0.804);
-    glPushMatrix();
-    glTranslatef(1.3, 2.4, 3);
-    glScalef(0.16, 0.08, 0.01);
-    drawCube1(.416, 0.353, 0.804, 0.208, 0.1765, 0.402);
-    glPopMatrix();
-
-    //showpiece on 3rd shelf left 1
-    glPushMatrix();
-    glTranslatef(0.4, 1.9, 3);
-    glScalef(0.05, 0.16, 0.01);
-    drawCube1(0.863, 0.078, 0.235, 0.4315, 0.039, 0.1175);
-    glPopMatrix();
-
-    //showpiece on 3rd shelf left 2
-    glPushMatrix();
-    glTranslatef(0.7, 1.9, 3);
-    glScalef(0.05, 0.12, 0.01);
-    drawCube1(0.780, 0.082, 0.522, 0.39, 0.041, 0.261);
-    glPopMatrix();
-
-    //showpiece on 3rd shelf left 3
-    glColor3f(0.600, 0.196, 0.800);
-    glPushMatrix();
-    glTranslatef(1, 1.9, 3);
-    glScalef(0.05, 0.09, 0.01);
-    drawCube1(0.6, 0.196, 0.8, 0.3, 0.098, 0.4);
-    glPopMatrix();
-
-    //showpiece on 4th shelf
-    glPushMatrix();
-    glTranslatef(1.8, 1.5, 3);
-    glScalef(0.2, 0.1, 0.2);
-    drawpyramid(0.282, 0.239, 0.545, 0.141, 0.1195, 0.2725, 50);
-    glPopMatrix();
-
-    //showpiece on 4th shelf
-    glPushMatrix();
-    glTranslatef(1.4, 1.5, 3);
-    glScalef(0.15, 0.1, 0.2);
-    drawpyramid(0.251, 0.878, 0.816, 0.1255, 0.439, 0.408, 50);
-    glPopMatrix();
-
-}
-
-void Clock()
-{
-    //Clock ************************************************************
-
-        //clock body
+        //saat gövde
     glColor3f(0.545, 0.271, 0.075);
     glPushMatrix();
     glTranslatef(-0.9, 1.8, 7.87);
     //glRotatef(22, 0,0,1);
     glScalef(0.08, 0.25, 0.1);
-    drawCube1(0.545, 0.271, 0.075, 0.271, 0.1335, 0.0375, 50);
+    kupCiz(0.400, 0.804, 0.667, 0.2, 0.4, 0.0375, 50);
     glPopMatrix();
 
-    //clock body white
+    //clock gövde beyaz kýsým
     glPushMatrix();
     glTranslatef(-0.83, 1.9, 7.9);
     //glRotatef(22, 0,0,1);
     glScalef(0.06, 0.2, 0.08);
-    drawCube1(1.000, 0.894, 0.710, 1.000, 0.894, 0.710);
+    kupCiz(1.000, 0.894, 0.710, 1.000, 0.894, 0.710);
     glPopMatrix();
 
-    //clock hour handle
+    //saat akrep
     glPushMatrix();
     glTranslatef(-0.65, 2.18, 8.01);
     glRotatef(45, 1, 0, 0);
     glScalef(0.0001, 0.01, 0.04);
-    drawCube1(0, 0, 0, 0, 0, 0);
+    kupCiz(0, 0, 0, 0, 0, 0);
     glPopMatrix();
 
-    //clock minute handle
+    //saat yelkovan
     glPushMatrix();
     glTranslatef(-0.65, 2.18, 8.01);
     glRotatef(90, 1, 0, 0);
     glScalef(0.0001, 0.012, 0.08);
-    drawCube1(0, 0, 0, 0, 0, 0);
+    kupCiz(0, 0, 0, 0, 0, 0);
     glPopMatrix();
 
 
-       //clock pendulum stick
+       //saat çubuk
     glColor3f(0.2, 0.1, 0.1); //0.2,0.1,0.1
     glPushMatrix();
     glTranslatef(-0.7, 2, 8.1);
     glRotatef(theta, 1, 0, 0);
     glScalef(0.0001, 0.2, 0.03);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //clock pendulum ball
+    //saat çubuktaki top
     glColor3f(0.2, 0.1, 0.1); //0.2,0.1,0.1
     glPushMatrix();
     glTranslatef(-0.72, 1.42, z);
     //glRotatef(x, 1,0,0);
     glScalef(0.035, 0.035, 0.035);
     //drawCube();
-    drawSphere(0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 10);
+    kureCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 10);
     glPopMatrix();
 
-    //clock top pyramid
+    //clock üst piramit
     glPushMatrix();
     glTranslatef(-0.9, 2.5, 7.81);
     //glRotatef(x, 1,0,0);
     glScalef(0.16, 0.1, 0.2);
-    drawpyramid(0.5, 0.2, 0, 0.25, 0.1, 0, 50);
+    piramitCiz(0.400, 0.804, 0.667, 0.2, 0.4, 0.0375, 50);
     glPopMatrix();
 }
 
-void window()
+void ayna()
 {
-    //Window ********************************************
-    //window white open
+    //ayna 
     glPushMatrix();
     glTranslatef(-0.9, 1, 8.9); //0.5,1,9.6
     glScalef(0.0001, .6, .3);
-    drawCube1(1.0, 1.0, 1.0, 0.05, 0.05, 0.05);
+    kupCiz(1.0, 1.0, 1.0, 0.05, 0.05, 0.05);
     glPopMatrix();
 
-    //window right side corner
+    //ayna sað kenar
     glPushMatrix();
     glTranslatef(-0.9, 1, 8.9);
     glScalef(0.04, 0.6, 0.0001);
-    drawCube1(0.8, 0.6, 0.4, 0.4, 0.3, 0.2);
+    kupCiz(0.8, 0.6, 0.4, 0.4, 0.3, 0.2);
     glPopMatrix();
 
-    //window left side corner
+    //ayna sol kenar
     glPushMatrix();
     glTranslatef(-0.9, 1, 9.8);
     glScalef(0.04, 0.6, 0.0001);
-    drawCube1(0.8, 0.6, 0.4, 0.4, 0.3, 0.2);
+    kupCiz(0.8, 0.6, 0.4, 0.4, 0.3, 0.2);
     glPopMatrix();
 
-    //window upper side corner
+    //ayna üst kenar
     glPushMatrix();
     glTranslatef(-0.7, 2.7, 8.9);
     glScalef(0.0001, 0.05, 0.4);
-    drawCube1(0.7, 0.6, 0.5, 0.35, 0.3, 0.25);
+    kupCiz(0.7, 0.6, 0.5, 0.35, 0.3, 0.25);
     glPopMatrix();
 
 
-    //window lower side corner
+    //ayna alt kenar
     glPushMatrix();
     glTranslatef(-0.8, 1.02, 8.9);
     glScalef(0.0001, 0.02, 0.34);
-    drawCube1(0.7, 0.6, 0.5, 0.35, 0.3, 0.25);
+    kupCiz(0.7, 0.6, 0.5, 0.35, 0.3, 0.25);
     glPopMatrix();
 
-    //window vertical bar 1
-    glPushMatrix();
-    glTranslatef(-0.87, 2.1, 8.9);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.0001, 0.02, 0.3);
-    drawCube1(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5);
-    glPopMatrix();
-
-    //window vertical bar 2
-    glPushMatrix();
-    glTranslatef(-0.87, 1.6, 8.9);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.0001, 0.02, 0.3);
-    drawCube1(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5);
-    glPopMatrix();
-
-    //window horizontal bar
-    glPushMatrix();
-    glTranslatef(-0.87, 1, 9.3);
-    //glRotatef(22, 0,0,1);
-    glScalef(0.0001, 0.6, 0.02);
-    drawCube1(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5);
-    glPopMatrix();
+ 
 }
 
-void sphericalObject()
+void masa()
 {
-    //table top part
+    //masa yüzey
     glPushMatrix();
-    glTranslatef(5, 0.2, 10);
-    glScalef(0.1, 0.02, 0.1);
-    drawSphere(0.5, 0.2, 0, 0.25, 0.1, 0, 20);
+    //glTranslatef(5, 0.2, 10);
+    glTranslatef(4.4, 1.2, 9);
+    //glScalef(0.1, 0.02, 0.1);
+    glScalef(0.4, 0.05, 0.5);
+    //kureCiz(0.5, 0.2, 0, 0.25, 0.1, 0, 20);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
-    //table leg
-    glColor3f(0.2, 0.1, 0.1); //0.2,0.1,0.1
+    // ayak
     glPushMatrix();
     glTranslatef(4.98, -0.1, 10);
-    glScalef(0.02, 0.1, 0.02);
-    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    glScalef(0.02, 0.45, 0.02);
+    kupCiz(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
-
-    //base
+    // taban
     glPushMatrix();
     glTranslatef(5, -0.1, 10);
     glScalef(0.05, 0.01, 0.05);
-    drawSphere(0.5, 0.2, 0, 0.25, 0.1, 0, 20);
+    kureCiz(0.5, 0.2, 0, 0.25, 0.1, 0, 20);
     glPopMatrix();
 }
 
 
-void lightBulb1()
+void lightBulb1() // saðdaki tepe lambasýný ve aydýnlanma deðerlerini ayarlar
 {
     GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 };
@@ -1125,7 +898,7 @@ void lightBulb1()
     glPopMatrix();
 }
 
-void lightBulb2()
+void lightBulb2() // soldaki tepe lambasýný ve aydýnlanma deðerlerini ayarlar
 {
     GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 };
@@ -1151,7 +924,7 @@ void lightBulb2()
     glPopMatrix();
 }
 
-void lightBulb3()
+void lightBulb3()// abajurun içindeki lambasýný ve aydýnlanma deðerlerini ayarlar
 {
     GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
     GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 };
@@ -1178,7 +951,7 @@ void lightBulb3()
 }
 
 
-void lightOne()
+void lightOne() // Iþýk kaynaðýnýn aydýnlatma ile ilgili deðiþkenlerini yapýlandýrýr
 {
     glPushMatrix();
     GLfloat no_light[] = { 0.0, 0.0, 0.0, 1.0 };
@@ -1202,7 +975,7 @@ void lightOne()
     glPopMatrix();
 }
 
-void lightTwo()
+void lightTwo()// Iþýk kaynaðýnýn aydýnlatma ile ilgili deðiþkenlerini yapýlandýrýr
 {
     glPushMatrix();
     GLfloat no_light[] = { 0.0, 0.0, 0.0, 1.0 };
@@ -1226,7 +999,7 @@ void lightTwo()
     glPopMatrix();
 }
 
-void lampLight()
+void lampLight() // Abajurdaki Iþýk kaynaðýnýn aydýnlatma ile ilgili deðiþkenlerini yapýlandýrýr
 {
     glPushMatrix();
     GLfloat no_light[] = { 0.0, 0.0, 0.0, 1.0 };
@@ -1271,17 +1044,16 @@ void display(void)
     lightOne();
     lightTwo();
     lampLight();
-    room();
-    bed();
-    bedsideDrawer();
-    lamp();
-    wallshelf();
-    wardrobe();
-    cupboard();
-    dressingTable();
-    Clock();
-    window();
-    sphericalObject();
+    oda();
+    yatak();
+    komodin();
+    lamba();
+    tv();
+    dolap();
+    sifonyer();
+    Saat();
+    ayna();
+    masa();
     lightBulb1();
     lightBulb2();
     //lightBulb3();
@@ -1291,7 +1063,7 @@ void display(void)
     glutSwapBuffers();
 }
 
-void myKeyboardFunc(unsigned char key, int x, int y)
+void klavyeFonk(unsigned char key, int x, int y)
 {
     switch (key)
     {
@@ -1385,7 +1157,7 @@ void myKeyboardFunc(unsigned char key, int x, int y)
     case'9':
         if (spec2 == false) { spec2 = true; break; }
         else { spec2 = false; break; }
-    case'e': //turn on/off ambient lamp light
+    case'e': //turn on/off ambient lamba light
         if (amb3 == false) { amb3 = true; break; }
         else { amb3 = false; break; }
     case'r':
@@ -1402,7 +1174,7 @@ void myKeyboardFunc(unsigned char key, int x, int y)
 }
 
 
-void animate()
+void animasyon()
 {
     if (redFlag == true)
     {
@@ -1459,24 +1231,23 @@ void animate()
     }
 
     glutPostRedisplay();
-
+    
 }
 
 void fullScreen(int w, int h)
 {
-    //Prevent a divide by zero, when window is too short;you cant make a window of zero width.
+    //0 olursa bölüm tanýmsýz çýkacaðýndan 1 e eþitliyoruz.
     if (h == 0)
         h = 1;
-    float ratio = (GLfloat)w / (GLfloat)h;         //Calculate aspect ratio of the window
+    float ratio = (GLfloat)w / (GLfloat)h;         //En boy oraný hesabý
 
-    //Set the perspective coordinate system
-    glMatrixMode(GL_PROJECTION);                   //Use the Projection Matrix
-    glLoadIdentity();                              //Reset Matrix
+    //Perspektif koordinat sistemini ayarladýk
+    glMatrixMode(GL_PROJECTION);                   
+    glLoadIdentity();                              
 
-    glViewport(0, 0, w, h);                        //Set the viewport to be the entire window
-    gluPerspective(60, ratio, 1, 500);             //Set the correct perspective.
-    //glFrustum(-2.5,2.5,-2.5,2.5, ratio, 200);
-    glMatrixMode(GL_MODELVIEW);                    //Get Back to the Modelview
+    glViewport(0, 0, w, h);                        
+    gluPerspective(60, ratio, 1, 500);             
+    glMatrixMode(GL_MODELVIEW);                    //Perspektif vs ayarýndan sonra model görünümüne tekrar geçtik.
 }
 
 
@@ -1484,42 +1255,42 @@ int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
 
-    std::cout << "To move Eye point:" << std::endl;
-    std::cout << "w: up" << std::endl;
-    std::cout << "s: down" << std::endl;
-    std::cout << "a: left" << std::endl;
-    std::cout << "d: right" << std::endl;
-    std::cout << "i: zoom in" << std::endl;
-    std::cout << "o: zoom out" << std::endl;
+    std::cout << "Goz pointerini hareket ettirmek icin:" << std::endl;
+    std::cout << "w: yukari" << std::endl;
+    std::cout << "s: asagi" << std::endl;
+    std::cout << "a: sol" << std::endl;
+    std::cout << "d: sag" << std::endl;
+    std::cout << "i: yakinlas" << std::endl;
+    std::cout << "o: uzaklas" << std::endl;
     std::cout << "      " << std::endl;
-    std::cout << "To move Camera point:" << std::endl;
-    std::cout << "j: up" << std::endl;
-    std::cout << "n: down" << std::endl;
-    std::cout << "b: left" << std::endl;
-    std::cout << "m: right" << std::endl;
-    std::cout << "l: move nearer" << std::endl;
-    std::cout << "k: move far" << std::endl;
+    std::cout << "Kamera pointerini hareket ettirmek icin:" << std::endl;
+    std::cout << "j: yukari" << std::endl;
+    std::cout << "n: asagi" << std::endl;
+    std::cout << "b: sol" << std::endl;
+    std::cout << "m: sag" << std::endl;
+    std::cout << "l: yakinlas" << std::endl;
+    std::cout << "k: uzaklas" << std::endl;
     std::cout << "      " << std::endl;
-    std::cout << "Press q to move to default position" << std::endl;
+    std::cout << "Q ile ayarlari resetle" << std::endl;
     std::cout << "      " << std::endl;
-    std::cout << "For lighting:      " << std::endl;
-    std::cout << "Light source 1 [the light on the right on the screen      " << std::endl;
-    std::cout << "1: to turn on/off light one     " << std::endl;
-    std::cout << "4: to turn on/off ambient light one     " << std::endl;
-    std::cout << "5: to turn on/off diffusion light one     " << std::endl;
-    std::cout << "6: to turn on/off specular light one      " << std::endl;
+    std::cout << "Isiklandirma icin:      " << std::endl;
+    std::cout << "1. Isik kaynagi [Ekranin sagindaki isik " << std::endl;
+    std::cout << "1: Isigi ac kapat     " << std::endl;
+    std::cout << "4: Ambient ayarini ac kapat     " << std::endl;
+    std::cout << "5: diffusion ayarini ac kapat      " << std::endl;
+    std::cout << "6: specular ayarini ac kapat      " << std::endl;
     std::cout << "      " << std::endl;
-    std::cout << "Light source 2 [the light on the left on the screen " << std::endl;
-    std::cout << "2: to turn on/off light two     " << std::endl;
-    std::cout << "7: to turn on/off ambient light two     " << std::endl;
-    std::cout << "8: to turn on/off diffusion light two     " << std::endl;
-    std::cout << "9: to turn on/off specular light two      " << std::endl;
+    std::cout << "2. Isik kaynagi [Ekranin solundaki isik " << std::endl;
+    std::cout << "2: Isigi ac kapat     " << std::endl;
+    std::cout << "7: Ambient ayarini ac kapat     " << std::endl;
+    std::cout << "8: diffusion ayarini ac kapat     " << std::endl;
+    std::cout << "9: specular ayarini ac kapat      " << std::endl;
     std::cout << "      " << std::endl;
-    std::cout << "Lamp light (spot light)" << std::endl;
-    std::cout << "3: to turn on/off lamp     " << std::endl;
-    std::cout << "e: to turn on/off ambient lamp light    " << std::endl;
-    std::cout << "r: to turn on/off diffusion lamp light      " << std::endl;
-    std::cout << "t: to turn on/off specular lamp light      " << std::endl;
+    std::cout << "Abajurdaki isik" << std::endl;
+    std::cout << "3: Isigi ac kapat     " << std::endl;
+    std::cout << "e: Ambient ayarini ac kapat    " << std::endl;
+    std::cout << "r: diffusion ayarini ac kapat      " << std::endl;
+    std::cout << "t: specular ayarini ac kapat      " << std::endl;
     std::cout << "      " << std::endl;
     std::cout << "____________________" << std::endl;
     std::cout << "      " << std::endl;
@@ -1537,8 +1308,8 @@ int main(int argc, char** argv)
 
     glutReshapeFunc(fullScreen);
     glutDisplayFunc(display);
-    glutKeyboardFunc(myKeyboardFunc);
-    glutIdleFunc(animate);
+    glutKeyboardFunc(klavyeFonk);
+    glutIdleFunc(animasyon);
     glutMainLoop();
 
     return 0;
